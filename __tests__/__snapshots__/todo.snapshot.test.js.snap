@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test for undo delete button 1`] = `
+<div>
+  <input
+    onClick={[Function]}
+    type="button"
+    value="Undo Delete"
+  />
+</div>
+`;
+
+exports[`Todo component renders correctly 1`] = `
+<div
+  className="todo  todo-1"
+>
+  <p
+    className="toggle-todo"
+    onClick={[Function]}
+  >
+    Buy Milk
+  </p>
+  <a
+    className="delete-todo"
+    href="#"
+    onClick={[Function]}
+  >
+    Delete
+  </a>
+</div>
+`;

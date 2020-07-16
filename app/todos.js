@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Todo from './todo';
 import AddTodo from './add-todo';
+import UndoTodo from './undo-delete';
 import shortid from 'shortid';
 
 import {
   toggleDone,
   addTodo,
-  deleteTodo
+  deleteTodo,
+  undoDelete
 } from './state-functions';
 
 export default class Todos extends React.Component {
@@ -17,10 +19,10 @@ export default class Todos extends React.Component {
         { id: shortid.generate(), name: 'Write a blog post for Sitepoint', done: false },
         { id: shortid.generate(), name: 'Blog about Jest', done: false },
         { id: shortid.generate(), name: 'Walk the dog', done: false },
-      ]
+      ],
+      deletedTodos: []
     }
   }
-
   toggleDone(id) {
     this.setState(toggleDone(this.state, id));
   }
@@ -31,6 +33,10 @@ export default class Todos extends React.Component {
 
   deleteTodo(id) {
     this.setState(deleteTodo(this.state, id));
+  }
+
+  undoDelete() {
+    this.setState(undoDelete(this.state))
   }
 
   renderTodos() {
@@ -47,9 +53,15 @@ export default class Todos extends React.Component {
   }
 
   render() {
+    let { deletedTodos }  = this.state
     return (
       <div>
-        <p>The <em>best</em> todo app out there.</p>
+        <div>
+          <p>The <em>best</em> todo app out there.</p>
+          { deletedTodos.length > 0 && 
+            <UndoTodo undo={() => this.undoDelete()}></UndoTodo>
+          }
+        </div>
         <h1>Things to get done:</h1>
         <ul className="todos-list">{ this.renderTodos() }</ul>
         <AddTodo onNewTodo={(todo) => this.addTodo(todo)} />
